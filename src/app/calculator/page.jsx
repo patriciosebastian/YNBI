@@ -1,17 +1,21 @@
-"use client";
+"use client"
 
+import next from "next";
+import Link from "next/link";
 import { useState } from "react"
 
 export default function Calculator() {
   const [ideas, setIdeas] = useState([
     {
       name: "",
+      description: "",
       effort: 0,
       knowledge: 0,
       interest: 0,
       fun: 0,
       time: 0,
       difficulty: 0,
+      showDescription: false,
     },
   ]);
   
@@ -30,7 +34,7 @@ export default function Calculator() {
 
   const handleInputChange = (index, field, value) => {
     const updatedIdeas = [...ideas];
-    updatedIdeas[index][field] = field === "name" ? value : Number(value);
+    updatedIdeas[index][field] = field === "name" || field === "description" ? value : Number(value);
     setIdeas(updatedIdeas);
   };
 
@@ -47,6 +51,12 @@ export default function Calculator() {
         difficulty: 0,
       },
     ]);
+  };
+
+  const handleToggleDescription = (index) => {
+    const updatedIdeas = [...ideas];
+    updatedIdeas[index].showDescription = !updatedIdeas[index].showDescription;
+    setIdeas(updatedIdeas);
   };
 
   const handleRemoveIdea = (index) => {
@@ -99,7 +109,7 @@ export default function Calculator() {
   };
 
   const handleClearIdeas = () => {
-    setIdeas([{ name: '', effort: 0, knowledge: 0, interest: 0, fun: 0, time: 0, difficulty: 0 }]);
+    setIdeas([{ name: '', description: '', effort: 0, knowledge: 0, interest: 0, fun: 0, time: 0, difficulty: 0, showDescription: false }]);
     setBestIdea(null);
     setNextTopTwoIdeas([]);
   };
@@ -107,7 +117,7 @@ export default function Calculator() {
   return (
     <div className='max-w-5xl mx-auto p-6'>
       <h1 className='text-4xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200'>
-        Business Idea Comparison
+        Your Next Business Idea
       </h1>
       <div className="mt-4 pl-6">
         <label className="flex items-center">
@@ -170,50 +180,72 @@ export default function Calculator() {
             </thead>
             <tbody className='divide-y divide-gray-200 dark:divide-gray-700'>
               {ideas.map((idea, index) => (
-                <tr key={index}>
-                  <td className='p-4'>
-                    <input
-                      type='text'
-                      value={idea.name}
-                      onChange={(e) =>
-                        handleInputChange(index, "name", e.target.value)
-                      }
-                      className='w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
-                      placeholder='Enter idea name'
-                    />
-                  </td>
-                  {[
-                    "effort",
-                    "knowledge",
-                    "interest",
-                    "fun",
-                    "time",
-                    "difficulty",
-                  ].map((field) => (
-                    <td key={field} className='p-4 text-center'>
+                <>
+                  <tr key={index}>
+                    <td className='p-4 flex items-center'>
+                      <button
+                        onClick={() => handleToggleDescription(index)}
+                        className='mr-2 focus:outline-none transition-all ease-in-out'
+                        aria-label="Toggle Description"
+                      >
+                        {idea.showDescription ? '▼' : '▶'}
+                      </button>
                       <input
-                        type='number'
-                        min='1'
-                        max='10'
-                        value={idea[field]}
+                        type='text'
+                        value={idea.name}
                         onChange={(e) =>
-                          handleInputChange(index, field, e.target.value)
+                          handleInputChange(index, "name", e.target.value)
                         }
-                        className='w-16 p-2 border border-gray-300 dark:border-gray-600 rounded-md text-center dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                        className='w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                        placeholder='Enter idea name'
                       />
                     </td>
-                  ))}
-                  <td className='p-4 text-center'>
-                    {ideas.length > 1 && (
-                      <button
-                        onClick={() => handleRemoveIdea(index)}
-                        className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:focus:ring-red-300"
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </td>
-                </tr>
+                    {[
+                      "effort",
+                      "knowledge",
+                      "interest",
+                      "fun",
+                      "time",
+                      "difficulty",
+                    ].map((field) => (
+                      <td key={field} className='p-4 text-center'>
+                        <input
+                          type='number'
+                          min='1'
+                          max='10'
+                          value={idea[field]}
+                          onChange={(e) =>
+                            handleInputChange(index, field, e.target.value)
+                          }
+                          className='w-16 p-2 border border-gray-300 dark:border-gray-600 rounded-md text-center dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                        />
+                      </td>
+                    ))}
+                    <td className='p-4 text-center'>
+                      {ideas.length > 1 && (
+                        <button
+                          onClick={() => handleRemoveIdea(index)}
+                          className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:focus:ring-red-300"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                  {idea.showDescription && (
+                    <tr key={`${index}-description`}>
+                      <td colSpan={8} className="p-4">
+                        <textarea
+                          value={idea.description}
+                          onChange={(e) => handleInputChange(index, "description", e.target.value)}
+                          className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500"
+                          placeholder="Enter a description of the idea"
+                          rows={3}
+                        />
+                      </td>
+                    </tr>
+                  )}
+                </>
               ))}
             </tbody>
           </table>
@@ -252,20 +284,23 @@ export default function Calculator() {
           </p>
         </div>
       )}
-      
+
       {nextTopTwoIdeas && nextTopTwoIdeas.length > 0 && (
-        <div className="mt-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow p-6">
-          <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
-            Next Top Two Ideas
-          </h2>
-          {nextTopTwoIdeas.map((idea, index) => (
-            <div key={index} className="mt-4 text-lg text-gray-800 dark:text-gray-400">
-              <p>
-                <strong>#{index + 2}: {idea.name}</strong> with a rating of {idea.score} out of 10.
-              </p>
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="mt-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow p-6">
+            <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
+              Next Top Two Ideas
+            </h2>
+            {nextTopTwoIdeas.map((idea, index) => (
+              <div key={index} className="mt-4 text-lg text-gray-800 dark:text-gray-400">
+                <p>
+                  <strong>#{index + 2}: {idea.name}</strong> with a rating of {idea.score} out of 10.
+                </p>
+              </div>
+            ))}
+          </div>
+          <Link href="/analysis" bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas}>View Analysis</Link>
+        </>
       )}
     </div>
   );
