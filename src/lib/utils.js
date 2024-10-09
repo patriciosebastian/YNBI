@@ -41,7 +41,7 @@ export async function getAnalysis({ bestIdea, nextTopTwoIdeas }) {
           5. **Conclusion & Next Steps**:
              - Summarize the analysis with actionable next steps, like building a prototype or exploring a specific market.
           
-          Make sure the response is concise but provides useful, actionable insights for each section. Keep the analysis within 850 tokens.`,
+          Make sure the response provides useful, actionable insights. Keep the analysis within 850 tokens.`,
         },
       ],
       max_tokens: 850,
