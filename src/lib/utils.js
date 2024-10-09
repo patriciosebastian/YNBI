@@ -13,16 +13,38 @@ export async function getAnalysis({ bestIdea, nextTopTwoIdeas }) {
       messages: [
         {
           role: 'system',
-          content: 'You are a business expert assistant that provides analysis of business ideas.',
+          content: 'You are an expert business analysis assistant that provides structured analysis of business ideas.',
         },
         {
           role: 'user',
           content: `Please analyze the following business ideas:
           ${ideas.map((idea, index) => `Idea ${index + 1}: Name - ${idea.name}, Score - ${idea.score}, Description - ${idea.description}`).join('\n')}
-          The analysis should include a short explanation of why the top idea (${bestIdea.name}) won over the others (${nextTopTwoIdeas.map(idea => idea.name).join(', ')}). Then provide a second, more full and detailed analysis of the best idea itself.`,
+
+          The analysis should follow this exact structure:
+          1. **Overview & Rankings**:
+             - Idea 1: ${ideas[0].name} - Score: ${ideas[0].score}
+             - Idea 2: ${ideas[1] ? ideas[1].name : 'N/A'} - Score: ${ideas[1] ? ideas[1].score : 'N/A'}
+             - Idea 3: ${ideas[2] ? ideas[2].name : 'N/A'} - Score: ${ideas[2] ? ideas[2].score : 'N/A'}
+          
+          2. **Why ${bestIdea.name} Wins**:
+             - Explain in a few points why the top idea (${bestIdea.name}) scored higher than the others.
+          
+          3. **Detailed Analysis of ${bestIdea.name}**:
+             - **Market Need**: Discuss the market need for this idea.
+             - **Strengths**: Highlight the strengths of this idea.
+             - **Challenges**: Mention any challenges or potential pitfalls.
+          
+          4. **Suggestions for Improvement**:
+             - **Feature Addition**: Suggest any feature or improvement that could make this idea more appealing.
+             - **Marketing Strategy**: Recommend potential marketing strategies.
+          
+          5. **Conclusion & Next Steps**:
+             - Summarize the analysis with actionable next steps, like building a prototype or exploring a specific market.
+          
+          Make sure the response is concise but provides useful, actionable insights for each section. Keep the analysis within 850 tokens.`,
         },
       ],
-      max_tokens: 750,
+      max_tokens: 850,
     });
 
     return response.choices[0].message.content;
