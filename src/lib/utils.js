@@ -1,10 +1,5 @@
-import OpenAI from 'openai'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-export async function getAnalysis({ bestIdea, nextTopTwoIdeas }) {
+// Generate a structured analysis based on the provided ideas
+export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
   const ideas = [bestIdea, ...nextTopTwoIdeas];
   
   try {
@@ -47,9 +42,10 @@ export async function getAnalysis({ bestIdea, nextTopTwoIdeas }) {
       max_tokens: 850,
     });
 
-    return response.choices[0].message.content;
+    const analysis = response.choices[0].message.content;
+    return analysis;
   } catch (error) {
-    if (error instanceof OpenAI.APIError) {
+    if (error instanceof openai.APIError) {
       console.error('Error generating analysis:', error.status, error.message, error.code, error.type);
       return 'There was an error generating the analysis. Please try again later.';
     } else {
@@ -57,4 +53,29 @@ export async function getAnalysis({ bestIdea, nextTopTwoIdeas }) {
       return 'Unexpected error occurred. Please try again later.';
     }
   }
-}
+};
+
+// Format the analysis response for better readability
+export const formatAnalysis = (analysis) => {
+  if (!analysis || typeof analysis !== 'string') {
+    console.error('Invalid analysis input for formatting:', analysis);
+    return 'Error: Analysis data is invalid.';
+  }
+
+  return analysis
+    .replace(/(\*\*Overview & Rankings\*\*)/g, '<h2>$1</h2>')
+    .replace(/(\*\*Why [^\*]* Wins\*\*)/g, '<h2>$1</h2>')
+    .replace(/(\*\*Detailed Analysis of [^\*]*\*\*)/g, '<h2>$1</h2>')
+    .replace(/(\*\*Suggestions for Improvement\*\*)/g, '<h2>$1</h2>')
+    .replace(/(\*\*Conclusion & Next Steps\*\*)/g, '<h2>$1</h2>')
+
+    .replace(/(\*\*Market Need\*\*)/g, '<h3>$1</h3>')
+    .replace(/(\*\*Strengths\*\*)/g, '<h3>$1</h3>')
+    .replace(/(\*\*Challenges\*\*)/g, '<h3>$1</h3>')
+
+    .replace(/- (.+)/g, '<li>$1</li>')
+    .replace(/<\/h2>\s*<li>/g, '</h2><ul><li>')
+    .replace(/<\/li>(?!<li>)/g, '</li></ul>')
+
+    .replace(/\n/g, '<br/>');
+};

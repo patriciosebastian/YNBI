@@ -1,14 +1,17 @@
 'use client'
 
+import { formatAnalysis } from "@/lib/utils"
 import { useEffect, useState } from "react"
+import parse from 'html-react-parser'
 
 export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
-  const [analysis, setAnalysis] = useState('');
   const [loading, setLoading] = useState(false);
+  const [formattedAnalysis, setFormattedAnalysis] = useState('');
 
   useEffect(() => {
     const fetchAnalysis = async () => {
       setLoading(true);
+      setFormattedAnalysis('');
 
       try {
         const response = await fetch('/api/getAnalysis', {
@@ -20,10 +23,10 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
         });
 
         const data = await response.json();
-        setAnalysis(data.analysis);
+        setFormattedAnalysis(formatAnalysis(data.analysis));
       } catch (error) {
         console.error('Error fetching analysis:', error);
-        setAnalysis('Error generating analysis. Please try again later.');
+        setFormattedAnalysis('Error generating analysis. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -45,7 +48,9 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
         <p>Loading analysis...</p>
       ) : (
         <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <p className="text-lg text-gray-700 dark:text-gray-300">{analysis}</p>
+          <div className="text-lg text-gray-700 dark:text-gray-300">
+            {parse(formattedAnalysis)}
+          </div>
         </div>
       )}
     </div>
