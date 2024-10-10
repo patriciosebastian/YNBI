@@ -1,3 +1,6 @@
+import { marked } from "marked"
+import parse from "html-react-parser"
+
 // Generate a structured analysis based on the provided ideas
 export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
   const ideas = [bestIdea, ...nextTopTwoIdeas];
@@ -55,35 +58,13 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
   }
 };
 
-// Format the analysis response for better readability
+// Convert the analysis Markdown to HTML
 export const formatAnalysis = (analysis) => {
-  if (!analysis || typeof analysis !== 'string') {
-    console.error('Invalid analysis input for formatting:', analysis);
-    return 'Error: Analysis data is invalid.';
-  }
+  const html = marked(analysis, {
+    breaks: true,
+    gfm: true,
+  });
 
-  return analysis
-  // Remove Markdown-style emphasis (**)
-  .replace(/\*\*(.*?)\*\*/g, '$1')
-
-  // Wrap main sections with <h2> and add spacing classes
-  .replace(/(Overview & Rankings)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
-  .replace(/(Why [^\*]* Wins)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
-  .replace(/(Detailed Analysis of [^\*]*)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
-  .replace(/(Suggestions for Improvement)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
-  .replace(/(Conclusion & Next Steps)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
-
-  // Wrap subsections inside the detailed analysis with <h3> and add spacing classes
-  .replace(/(Market Need)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
-  .replace(/(Strengths)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
-  .replace(/(Challenges)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
-
-  // Replace bullet points with list items for better formatting
-  .replace(/- (.+)/g, '<li>$1</li>')
-  .replace(/<\/h2>\s*<li>/g, '</h2><ul><li>') // Start a list after <h2>
-  .replace(/<\/li>(?!<li>)/g, '</li></ul>') // Close the list after the last item
-
-  // Wrap non-list text blocks in <p> for better spacing
-  .replace(/(\n\s*\n)/g, '</p><p>') // Add <p> tags for double newlines
-  .replace(/^(.+?)$/gm, '<p>$1</p>'); // Wrap remaining content in <p> tags
+  // parse with html-react-parser
+  return parse(html);
 };

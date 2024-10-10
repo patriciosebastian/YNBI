@@ -2,7 +2,6 @@
 
 import { formatAnalysis } from "@/lib/utils"
 import { useEffect, useState } from "react"
-import parse from 'html-react-parser'
 
 export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   const [loading, setLoading] = useState(false);
@@ -37,7 +36,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Analysis</h1>
+      <h1 className="text-4xl font-bold mb-4">Analysis</h1>
       <button
         onClick={onBack}
         className="mb-4 px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300"
@@ -48,8 +47,8 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
         <p>Loading analysis...</p>
       ) : (
         <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <div className="text-lg text-gray-700 dark:text-gray-300">
-            {parse(formattedAnalysis)}
+          <div className="ai-analysis-content text-lg text-gray-700 dark:text-gray-300">
+            {formattedAnalysis}
           </div>
         </div>
       )}
