@@ -63,19 +63,27 @@ export const formatAnalysis = (analysis) => {
   }
 
   return analysis
-    .replace(/(\*\*Overview & Rankings\*\*)/g, '<h2>$1</h2>')
-    .replace(/(\*\*Why [^\*]* Wins\*\*)/g, '<h2>$1</h2>')
-    .replace(/(\*\*Detailed Analysis of [^\*]*\*\*)/g, '<h2>$1</h2>')
-    .replace(/(\*\*Suggestions for Improvement\*\*)/g, '<h2>$1</h2>')
-    .replace(/(\*\*Conclusion & Next Steps\*\*)/g, '<h2>$1</h2>')
+  // Remove Markdown-style emphasis (**)
+  .replace(/\*\*(.*?)\*\*/g, '$1')
 
-    .replace(/(\*\*Market Need\*\*)/g, '<h3>$1</h3>')
-    .replace(/(\*\*Strengths\*\*)/g, '<h3>$1</h3>')
-    .replace(/(\*\*Challenges\*\*)/g, '<h3>$1</h3>')
+  // Wrap main sections with <h2> and add spacing classes
+  .replace(/(Overview & Rankings)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
+  .replace(/(Why [^\*]* Wins)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
+  .replace(/(Detailed Analysis of [^\*]*)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
+  .replace(/(Suggestions for Improvement)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
+  .replace(/(Conclusion & Next Steps)/g, '<h2 class="mb-4 mt-6">$1:</h2>')
 
-    .replace(/- (.+)/g, '<li>$1</li>')
-    .replace(/<\/h2>\s*<li>/g, '</h2><ul><li>')
-    .replace(/<\/li>(?!<li>)/g, '</li></ul>')
+  // Wrap subsections inside the detailed analysis with <h3> and add spacing classes
+  .replace(/(Market Need)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
+  .replace(/(Strengths)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
+  .replace(/(Challenges)/g, '<h3 class="mb-3 mt-4">$1:</h3>')
 
-    .replace(/\n/g, '<br/>');
+  // Replace bullet points with list items for better formatting
+  .replace(/- (.+)/g, '<li>$1</li>')
+  .replace(/<\/h2>\s*<li>/g, '</h2><ul><li>') // Start a list after <h2>
+  .replace(/<\/li>(?!<li>)/g, '</li></ul>') // Close the list after the last item
+
+  // Wrap non-list text blocks in <p> for better spacing
+  .replace(/(\n\s*\n)/g, '</p><p>') // Add <p> tags for double newlines
+  .replace(/^(.+?)$/gm, '<p>$1</p>'); // Wrap remaining content in <p> tags
 };
