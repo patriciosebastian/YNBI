@@ -2,6 +2,7 @@
 
 import { formatAnalysis } from "@/lib/utils"
 import { useEffect, useState } from "react"
+import Skeleton from "@/components/ui/skeleton"
 
 export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   const [loading, setLoading] = useState(false);
@@ -44,7 +45,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
         Back to Calculator
       </button>
       {loading ? (
-        <p>Loading analysis...</p>
+        <Skeleton />
       ) : (
         <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
           <div className="ai-analysis-content text-lg text-gray-700 dark:text-gray-300">
