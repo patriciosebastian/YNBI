@@ -1,8 +1,8 @@
 'use client'
 
-import { formatAnalysis } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import Skeleton from "@/components/ui/skeleton"
+import parse from "html-react-parser"
 
 export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
         });
 
         const data = await response.json();
-        setFormattedAnalysis(formatAnalysis(data.analysis));
+        setFormattedAnalysis(data.formattedContent);
       } catch (error) {
         console.error('Error fetching analysis:', error);
         setFormattedAnalysis('Error generating analysis. Please try again later.');
@@ -49,7 +49,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       ) : (
         <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
           <div className="ai-analysis-content text-lg text-gray-700 dark:text-gray-300">
-            {formattedAnalysis}
+            {parse(formattedAnalysis)}
           </div>
         </div>
       )}

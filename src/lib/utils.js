@@ -1,6 +1,3 @@
-import { marked } from "marked"
-import parse from "html-react-parser"
-
 // Generate a structured analysis based on the provided ideas
 export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
   const ideas = [bestIdea, ...nextTopTwoIdeas];
@@ -56,15 +53,4 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
       return 'Unexpected error occurred. Please try again later.';
     }
   }
-};
-
-// Convert the analysis Markdown to HTML
-export const formatAnalysis = (analysis) => {
-  const html = marked(analysis, {
-    breaks: true,
-    gfm: true,
-  });
-
-  // parse with html-react-parser
-  return parse(html);
 };
