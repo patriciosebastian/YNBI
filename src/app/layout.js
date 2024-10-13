@@ -19,16 +19,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-slate-850">
       {/* Try to use Next Head later */}
       <head>
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.slate.min.css"
+          href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.slate.min.css"
         />
       </head>
       <body
-        className={`h-svh ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`h-full ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>

@@ -40,7 +40,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       <h1 className="text-4xl font-bold mb-4">Analysis</h1>
       <button
         onClick={onBack}
-        className="mb-4 px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300"
+        className="mb-4"
       >
         Back to Calculator
       </button>
@@ -48,8 +48,8 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       {loading ? (
         <Skeleton />
       ) : (
-        <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
-          <div className="ai-analysis-content text-lg text-gray-700 dark:text-gray-300">
+        <div className="bg-slate-800 p-8 rounded">
+          <div className="ai-analysis-content text-lg">
             {parse(formattedAnalysis)}
           </div>
         </div>

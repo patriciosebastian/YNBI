@@ -121,7 +121,7 @@ export default function BusinessIdeaTable() {
       ) : (
         <>
           {/* Custom Wieghts */}
-          <div className="mt-4 pl-6">
+          <div className="mt-4">
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -135,7 +135,7 @@ export default function BusinessIdeaTable() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                 {Object.keys(customWeights).map((key) => (
                   <div key={key}>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label>
                       {key.charAt(0).toUpperCase() + key.slice(1)} Weight
                     </label>
                     <input
@@ -143,52 +143,51 @@ export default function BusinessIdeaTable() {
                       min="0"
                       value={customWeights[key]}
                       onChange={(e) => setCustomWeights({ ...customWeights, [key]: Number(e.target.value) })}
-                      className="mt-1 p-2 block w-full border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200"
                     />
                   </div>
                 ))}
               </div>
             )}
           </div>
-          
-          <div className='bg-white dark:bg-gray-800 rounded-lg shadow p-6'>
-            <div className='overflow-hidden rounded-lg border border-gray-300 dark:border-gray-600'>
+
+          <div>
+            <div>
               {/* Table */}
-              <table className='min-w-full bg-white dark:bg-gray-800'>
-                <thead className='bg-gray-100 dark:bg-gray-700'>
+              <table>
+                <thead>
                   <tr>
-                    <th className='text-left p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Idea Name
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Effort
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Knowledge
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Interest
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Fun
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Time
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'>
+                    <th>
                       Difficulty
                     </th>
-                    <th className='text-center p-4 text-gray-800 dark:text-gray-300'></th>
+                    <th></th>
                   </tr>
                 </thead>
-                <tbody className='divide-y divide-gray-200 dark:divide-gray-700'>
+                <tbody>
                   {ideas.map((idea, index) => (
                     <React.Fragment key={index}>
                       <tr>
                         <td className='p-4 flex items-center'>
                           <button
                             onClick={() => handleToggleDescription(index)}
-                            className='mr-2 focus:outline-none transition-all ease-in-out'
+                            className='mr-2 bg-transparent border-none focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
                             aria-label="Toggle Description"
                           >
                             {idea.showDescription ? '▼' : '▶'}
@@ -199,7 +198,6 @@ export default function BusinessIdeaTable() {
                             onChange={(e) =>
                               handleInputChange(index, "name", e.target.value)
                             }
-                            className='w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
                             placeholder='Enter idea name'
                           />
                         </td>
@@ -220,7 +218,7 @@ export default function BusinessIdeaTable() {
                               onChange={(e) =>
                                 handleInputChange(index, field, e.target.value)
                               }
-                              className='w-16 p-2 border border-gray-300 dark:border-gray-600 rounded-md text-center dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500'
+                              className='p-2 text-center'
                             />
                           </td>
                         ))}
@@ -228,7 +226,7 @@ export default function BusinessIdeaTable() {
                           {ideas.length > 1 && (
                             <button
                               onClick={() => handleRemoveIdea(index)}
-                              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:focus:ring-red-300"
+                              className="outline"
                             >
                               Remove
                             </button>
@@ -241,7 +239,7 @@ export default function BusinessIdeaTable() {
                             <textarea
                               value={idea.description}
                               onChange={(e) => handleInputChange(index, "description", e.target.value)}
-                              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-gray-200 focus:ring-blue-500 focus:border-blue-500"
+                              className="w-full my-2"
                               placeholder="Enter a description of the idea"
                               rows={3}
                             />
@@ -257,14 +255,13 @@ export default function BusinessIdeaTable() {
               {/* Add Idea Button */}
               <button
                 onClick={handleAddIdea}
-                className='px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300'
               >
                 Add Another Idea
               </button>
               {/* Calculate Best Idea Button */}
               <button
                 onClick={!ideas.length > 1 ? '' : handleCalculate}
-                className={`ml-4 px-6 py-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-300 ${ideas.length > 1 ? '' : 'cursor-default opacity-70 bg-gray-300 text-gray-500 hover:bg-gray-300'}`}
+                className='contrast ml-4'
                 disabled={ideas.length <= 1}
               >
                 Calculate Best Idea
@@ -272,23 +269,25 @@ export default function BusinessIdeaTable() {
               {/* Clear Ideas Button */}
               <button
                 onClick={handleClearIdeas}
-                className="ml-4 px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:focus:ring-red-300"
+                className='outline ml-4'
               >
                 Clear Ideas
               </button>
             </div>
           </div>
-                
+
           {/* Results */}
           <Results bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} />
-                
-          {/* View Analysis Button */}
-          <button
-            onClick={handleShowAnalysis}
-            className="mt-6 px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300"
-          >
-            View Analysis
-          </button>
+
+          {bestIdea && nextTopTwoIdeas.length > 0 && (
+            // View Analysis Button
+            <button
+              onClick={handleShowAnalysis}
+              className="mt-6"
+            >
+              View Analysis
+            </button>
+          )}
         </>
       )}
     </>
