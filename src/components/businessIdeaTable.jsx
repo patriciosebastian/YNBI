@@ -251,7 +251,7 @@ export default function BusinessIdeaTable() {
                 </tbody>
               </table>
             </div>
-            <div className='text-center mt-6'>
+            <div className='text-center mt-6 flex justify-center items-center md:block'>
               {/* Add Idea Button */}
               <button
                 onClick={handleAddIdea}
