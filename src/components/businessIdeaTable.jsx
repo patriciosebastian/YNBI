@@ -1,23 +1,25 @@
-"use client"
+'use client'
 
-import Analysis from "../analysis/page"
 import React, { useState } from "react"
+import Results from "./results"
+import Analysis from "@/app/analysis/page"
 
-export default function Calculator() {
-  const [ideas, setIdeas] = useState([
-    {
-      name: "",
-      description: "",
-      effort: 0,
-      knowledge: 0,
-      interest: 0,
-      fun: 0,
-      time: 0,
-      difficulty: 0,
-      showDescription: false,
-    },
-  ]);
-  
+export default function BusinessIdeaTable() {
+  const [bestIdea, setBestIdea] = useState(null);
+  const [nextTopTwoIdeas, setNextTopTwoIdeas] = useState([]);
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [useCustomWeights, setUseCustomWeights] = useState(false);
+  const [ideas, setIdeas] = useState([{
+    name: "",
+    description: "",
+    effort: 0,
+    knowledge: 0,
+    interest: 0,
+    fun: 0,
+    time: 0,
+    difficulty: 0,
+    showDescription: false,
+  }]);
   const [customWeights, setCustomWeights] = useState({
     effort: 1,
     knowledge: 1.2,
@@ -26,11 +28,6 @@ export default function Calculator() {
     time: 1,
     difficulty: 1,
   });
-
-  const [bestIdea, setBestIdea] = useState(null);
-  const [nextTopTwoIdeas, setNextTopTwoIdeas] = useState([]);
-  const [useCustomWeights, setUseCustomWeights] = useState(false);
-  const [showAnalysis, setShowAnalysis] = useState(false);
 
   const handleInputChange = (index, field, value) => {
     const updatedIdeas = [...ideas];
@@ -96,14 +93,13 @@ export default function Calculator() {
           (idea.knowledge * weights.knowledge)) /
         totalFactors;
 
-      const ratingOutOfTen = (weightedScore * 10).toFixed(1); // Convert to "out of 10" scale
+      const ratingOutOfTen = (weightedScore * 10).toFixed(1);
       return { ...idea, score: ratingOutOfTen };
     });
 
     // Sort the ideas by their scores in descending order
     const topIdeas = scores.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
 
-    // Set the best idea and the next top two ideas separately
     setBestIdea(topIdeas[0]);
     setNextTopTwoIdeas(topIdeas.slice(1, 3));
   };
@@ -123,10 +119,8 @@ export default function Calculator() {
       {showAnalysis ? (
         <Analysis bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} onBack={() => setShowAnalysis(false)} />
       ) : (
-        <div className='max-w-5xl mx-auto p-6'>
-          <h1 className='text-4xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200'>
-            Your Next Business Idea
-          </h1>
+        <>
+          {/* Custom Wieghts */}
           <div className="mt-4 pl-6">
             <label className="flex items-center">
               <input
@@ -156,9 +150,10 @@ export default function Calculator() {
               </div>
             )}
           </div>
-
+          
           <div className='bg-white dark:bg-gray-800 rounded-lg shadow p-6'>
             <div className='overflow-hidden rounded-lg border border-gray-300 dark:border-gray-600'>
+              {/* Table */}
               <table className='min-w-full bg-white dark:bg-gray-800'>
                 <thead className='bg-gray-100 dark:bg-gray-700'>
                   <tr>
@@ -259,12 +254,14 @@ export default function Calculator() {
               </table>
             </div>
             <div className='text-center mt-6'>
+              {/* Add Idea Button */}
               <button
                 onClick={handleAddIdea}
                 className='px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300'
               >
                 Add Another Idea
               </button>
+              {/* Calculate Best Idea Button */}
               <button
                 onClick={!ideas.length > 1 ? '' : handleCalculate}
                 className={`ml-4 px-6 py-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-300 ${ideas.length > 1 ? '' : 'cursor-default opacity-70 bg-gray-300 text-gray-500 hover:bg-gray-300'}`}
@@ -272,6 +269,7 @@ export default function Calculator() {
               >
                 Calculate Best Idea
               </button>
+              {/* Clear Ideas Button */}
               <button
                 onClick={handleClearIdeas}
                 className="ml-4 px-6 py-3 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 dark:focus:ring-red-300"
@@ -280,42 +278,18 @@ export default function Calculator() {
               </button>
             </div>
           </div>
-
-          {bestIdea && (
-            <div className="mt-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow p-6">
-              <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
-                Best Idea to Focus On
-              </h2>
-              <p className="mt-4 text-lg text-gray-800 dark:text-gray-400">
-                <strong>{bestIdea.name}</strong> is the best idea to pursue based on your input with a rating of{' '}
-                {bestIdea.score} out of 10.
-              </p>
-            </div>
-          )}
-
-          {nextTopTwoIdeas && nextTopTwoIdeas.length > 0 && (
-            <>
-              <div className="mt-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow p-6">
-                <h2 className="text-2xl font-bold text-gray-700 dark:text-gray-200">
-                  Next Top Two Ideas
-                </h2>
-                {nextTopTwoIdeas.map((idea, index) => (
-                  <div key={index} className="mt-4 text-lg text-gray-800 dark:text-gray-400">
-                    <p>
-                      <strong>#{index + 2}: {idea.name}</strong> with a rating of {idea.score} out of 10.
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={handleShowAnalysis}
-                className="mt-6 px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300"
-              >
-                View Analysis
-              </button>
-            </>
-          )}
-        </div>
+                
+          {/* Results */}
+          <Results bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} />
+                
+          {/* View Analysis Button */}
+          <button
+            onClick={handleShowAnalysis}
+            className="mt-6 px-6 py-3 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-300"
+          >
+            View Analysis
+          </button>
+        </>
       )}
     </>
   );

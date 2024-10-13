@@ -44,6 +44,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       >
         Back to Calculator
       </button>
+
       {loading ? (
         <Skeleton />
       ) : (
