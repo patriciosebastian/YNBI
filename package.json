@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.15",
     "autoprefixer": "^10.4.20",
     "html-react-parser": "^5.1.18",
     "marked": "^14.1.2",
