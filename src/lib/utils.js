@@ -54,3 +54,30 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
     }
   }
 };
+
+export function getCookieValue(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// Fetch user's pages in their Notion workspace
+export async function fetchUserNotionPages(accessToken) {
+  console.log('Hit the fetchUserNotionPages function'); // remove this line
+
+  const response = await fetch('https://api.notion.com/v1/search', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      'Notion-Version': '2022-06-08',
+    },
+    body: JSON.stringify({
+      query: '',
+      filter: { value: 'page', property: 'object' },
+    }),
+  });
+
+  const data = await response.json();
+  return data.results;
+}
