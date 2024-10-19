@@ -39,11 +39,11 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   const exportToPDF = () => {
     const element = document.querySelector('.ai-analysis-content');
     const options = {
-      margin: 0.5,
+      margin: 0.25,
       filename: 'Business_Idea_Analysis.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 1.5 },
-      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
     };
 
     html2pdf().from(element).set(options).save();
@@ -68,7 +68,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       {loading ? (
         <Skeleton />
       ) : (
-        <div className="analysis-container rounded">
+        <div className="analysis-container p-4 rounded">
           <div className="ai-analysis-content text-lg">
             {parse(formattedAnalysis)}
           </div>

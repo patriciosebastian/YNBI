@@ -2,7 +2,7 @@ export default function Results({ bestIdea, nextTopTwoIdeas,}) {
   return (
     <>
       {bestIdea && (
-        <div className="best-idea-section mt-8 bg-slate-800 rounded p-7">
+        <div className="best-idea-section mt-8 rounded p-7">
           <h2>
             Best Idea to Focus On
           </h2>
@@ -14,7 +14,7 @@ export default function Results({ bestIdea, nextTopTwoIdeas,}) {
       )}
 
       {nextTopTwoIdeas && nextTopTwoIdeas.length > 0 && (
-        <div className="next-top-two-ideas-section mt-8 bg-slate-800 rounded p-7">
+        <div className="next-top-two-ideas-section mt-8 rounded p-7">
           <h2>
             Next Top Two Ideas
           </h2>
