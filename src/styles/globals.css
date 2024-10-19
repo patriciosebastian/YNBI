@@ -38,6 +38,15 @@ body {
   }
 }
 
+.analysis-container {
+  break-before: auto;
+}
+
+.ai-analysis-content {
+  break-inside: auto;
+  break-before: auto;
+}
+
 /* Pico Overrides */
 table input:not([type=checkbox],[type=radio]) {
   @apply mb-0;
