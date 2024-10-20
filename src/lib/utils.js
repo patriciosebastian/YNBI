@@ -8,7 +8,7 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
       messages: [
         {
           role: 'system',
-          content: 'You are an expert business analysis assistant that provides structured analysis of business ideas.',
+          content: 'You are an expert business analysis assistant that provides structured analysis of business ideas. Do not hesitate to point out if any idea is fundamentally flawed or unrealistic.',
         },
         {
           role: 'user',
@@ -36,10 +36,10 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
           5. **Conclusion & Next Steps**:
              - Summarize the analysis with actionable next steps, like building a prototype or exploring a specific market.
           
-          Make sure the response provides useful, actionable insights. Keep the analysis within 850 tokens.`,
+          Ensure that if any red flags or serious potential flaws are detected, they are clearly highlighted. Make sure the response provides useful, actionable insights. Keep the analysis within 1000 tokens.`,
         },
       ],
-      max_tokens: 850,
+      max_tokens: 1000,
     });
 
     const analysis = response.choices[0].message.content;
