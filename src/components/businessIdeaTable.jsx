@@ -159,7 +159,7 @@ export default function BusinessIdeaTable() {
                 onChange={(e) => setUseCustomWeights(e.target.checked)}
                 className="mr-2"
               />
-              Use Custom Weights
+              Use Custom Scoring
             </label>
             {useCustomWeights && (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
