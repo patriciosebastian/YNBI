@@ -77,21 +77,17 @@ export default function BusinessIdeaTable() {
         difficulty: 1,
       };
 
-      const totalFactors =
-        idea.effort * weights.effort +
-        idea.knowledge * weights.knowledge +
+      const positiveFactors =
         idea.interest * weights.interest +
         idea.fun * weights.fun +
-        idea.time * weights.time +
-        idea.difficulty * weights.difficulty;
+        idea.knowledge * weights.knowledge;
 
-      const weightedScore =
-        ((idea.interest * weights.interest) +
-          (idea.fun * weights.fun) -
-          (idea.effort * weights.effort) -
-          (idea.difficulty * weights.difficulty) +
-          (idea.knowledge * weights.knowledge)) /
-        totalFactors;
+      const negativeFactors =
+        idea.effort * weights.effort +
+        idea.difficulty * weights.difficulty +
+        idea.time * weights.time;
+
+      const weightedScore = positiveFactors / negativeFactors;
 
       const ratingOutOfTen = (weightedScore * 10).toFixed(1);
       return { ...idea, score: ratingOutOfTen };
