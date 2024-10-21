@@ -1,3 +1,30 @@
+// Initialize with two empty ideas
+export const initialIdeas = [
+  {
+    name: "",
+    description: "",
+    effort: 1,
+    knowledge: 1,
+    interest: 1,
+    fun: 1,
+    time: 1,
+    difficulty: 1,
+    showDescription: false,
+  },
+  {
+    name: "",
+    description: "",
+    effort: 1,
+    knowledge: 1,
+    interest: 1,
+    fun: 1,
+    time: 1,
+    difficulty: 1,
+    showDescription: false,
+  },
+];
+
+// Scoring Mechanism Presets
 export const scoringPresets = {
   default: {
     effort: 1,

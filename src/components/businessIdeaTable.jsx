@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react"
-import { scoringPresets } from "@/lib/staticData"
+import { initialIdeas, scoringPresets } from "@/lib/staticData"
 import { isSufficientAnalysisData } from "@/lib/utils"
 import Results from "./results"
 import Analysis from "@/app/analysis/page"
@@ -13,17 +13,7 @@ export default function BusinessIdeaTable() {
   const [useCustomWeights, setUseCustomWeights] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState('default');
   const [sufficientAnalysisData, setSufficientAnalysisData] = useState(false);
-  const [ideas, setIdeas] = useState([{
-    name: "",
-    description: "",
-    effort: 1,
-    knowledge: 1,
-    interest: 1,
-    fun: 1,
-    time: 1,
-    difficulty: 1,
-    showDescription: false,
-  }]);
+  const [ideas, setIdeas] = useState(initialIdeas);
   const [customWeights, setCustomWeights] = useState({
     effort: 1,
     knowledge: 1.2,
@@ -117,7 +107,7 @@ export default function BusinessIdeaTable() {
   };
 
   const handleClearIdeas = () => {
-    setIdeas([{ name: '', description: '', effort: 0, knowledge: 0, interest: 0, fun: 0, time: 0, difficulty: 0, showDescription: false }]);
+    setIdeas(initialIdeas);
     setBestIdea(null);
     setNextTopTwoIdeas([]);
   };
@@ -233,7 +223,7 @@ export default function BusinessIdeaTable() {
                             onChange={(e) =>
                               handleInputChange(index, "name", e.target.value)
                             }
-                            placeholder='Enter idea name *'
+                            placeholder='Enter Name *'
                           />
                         </td>
                         {[
