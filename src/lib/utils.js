@@ -57,8 +57,8 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
 
 // Check if sufficient analysis data is provided
 export const isSufficientAnalysisData = (ideas) => {
-  const isNameFilled = ideas.some((idea) => idea.name.trim() !== '');
-  const isDescriptionFilled = ideas.some((idea) => idea.description.trim() !== '');
+  const isNameFilled = ideas.every((idea) => idea.name.trim() !== '');
+  const isDescriptionFilled = ideas.every((idea) => idea.description.trim() !== '');
 
   return isNameFilled && isDescriptionFilled && isAllCategoriesInOneRowFilled;
 };
