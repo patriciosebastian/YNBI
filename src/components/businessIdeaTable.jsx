@@ -295,9 +295,9 @@ export default function BusinessIdeaTable() {
               </button>
               {/* Calculate Best Idea Button */}
               <button
-                onClick={!ideas.length > 1 ? '' : handleCalculate}
+                onClick={handleCalculate}
                 className='contrast ml-4'
-                disabled={ideas.length <= 1}
+                disabled={ideas.length <= 1 || !sufficientAnalysisData}
               >
                 Calculate Best Idea
               </button>
