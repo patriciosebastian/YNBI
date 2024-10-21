@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { initialIdeas, scoringPresets } from "@/lib/staticData"
 import { isSufficientAnalysisData } from "@/lib/utils"
+import { TrashIcon } from "@heroicons/react/20/solid"
 import Results from "./results"
 import Analysis from "@/app/analysis/page"
 
@@ -253,7 +254,7 @@ export default function BusinessIdeaTable() {
                               onClick={() => handleRemoveIdea(index)}
                               className="outline"
                             >
-                              Remove
+                              <TrashIcon className="h-4 w-4 text-red-500" />
                             </button>
                           )}
                         </td>
