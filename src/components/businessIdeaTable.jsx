@@ -10,7 +10,7 @@ export default function BusinessIdeaTable() {
   const [nextTopTwoIdeas, setNextTopTwoIdeas] = useState([]);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [useCustomWeights, setUseCustomWeights] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState(scoringPresets.default);
+  const [selectedPreset, setSelectedPreset] = useState('default');
   const [ideas, setIdeas] = useState([{
     name: "",
     description: "",
@@ -34,7 +34,9 @@ export default function BusinessIdeaTable() {
   useEffect(() => {
     const savedPreset = localStorage.getItem("selectedPreset");
     if (savedPreset) {
-      setSelectedPreset(scoringPresets[savedPreset]);
+      setSelectedPreset(savedPreset);
+    } else {
+      setSelectedPreset('default');
     }
   }, []);
 
@@ -49,6 +51,7 @@ export default function BusinessIdeaTable() {
       ...ideas,
       {
         name: "",
+        description: "",
         effort: 0,
         knowledge: 0,
         interest: 0,
@@ -121,9 +124,9 @@ export default function BusinessIdeaTable() {
   };
 
   const handlePresetChange = (e) => {
-    const selectedPreset = e.target.value;
-    setSelectedPreset(scoringPresets[selectedPreset]);
-    localStorage.setItem("selectedPreset", selectedPreset);
+    const presetKey = e.target.value;
+    setSelectedPreset(presetKey);
+    localStorage.setItem("selectedPreset", presetKey);
   };
 
   return (
@@ -163,7 +166,16 @@ export default function BusinessIdeaTable() {
           </div>
 
           {/* Presets */}
-          <select name="select" aria-label="Select" onChange={handlePresetChange} className="w-fit mt-4">
+          <label htmlFor="scoring-preset-select" className="mt-4">Scoring Presets</label>
+          <select
+            name="scoringPreset"
+            id="scoring-preset-select"
+            aria-label="Scoring Preset Options"
+            value={selectedPreset}
+            onChange={handlePresetChange}
+            className="w-fit"
+            disabled={useCustomWeights}
+          >
             <option value="default">Default</option>
             <option value="timeCritical">Time-Critical</option>
             <option value="passionDriven">Passion-Driven</option>
@@ -207,7 +219,7 @@ export default function BusinessIdeaTable() {
                         <td className='p-4 flex items-center'>
                           <button
                             onClick={() => handleToggleDescription(index)}
-                            className='mr-2 bg-transparent border-none focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
+                            className='mr-2 text-black bg-transparent border-none focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
                             aria-label="Toggle Description"
                           >
                             {idea.showDescription ? '▼' : '▶'}
