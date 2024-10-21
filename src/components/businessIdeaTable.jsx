@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from "react"
+import { scoringPresets } from "@/lib/staticData"
+import { isSufficientAnalysisData } from "@/lib/utils"
 import Results from "./results"
 import Analysis from "@/app/analysis/page"
-import { scoringPresets } from "@/lib/staticData"
 
 export default function BusinessIdeaTable() {
   const [bestIdea, setBestIdea] = useState(null);
@@ -11,6 +12,7 @@ export default function BusinessIdeaTable() {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [useCustomWeights, setUseCustomWeights] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState('default');
+  const [sufficientAnalysisData, setSufficientAnalysisData] = useState(false);
   const [ideas, setIdeas] = useState([{
     name: "",
     description: "",
@@ -111,6 +113,7 @@ export default function BusinessIdeaTable() {
 
     setBestIdea(topIdeas[0]);
     setNextTopTwoIdeas(topIdeas.slice(1, 3));
+    setSufficientAnalysisData(isSufficientAnalysisData(topIdeas));
   };
 
   const handleClearIdeas = () => {
@@ -312,13 +315,22 @@ export default function BusinessIdeaTable() {
           <Results bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} />
 
           {bestIdea && nextTopTwoIdeas.length > 0 && (
-            // View Analysis Button
-            <button
-              onClick={handleShowAnalysis}
-              className="mt-6"
-            >
-              View Analysis
-            </button>
+            <>
+              {!sufficientAnalysisData && (
+                <p className="text-red-500 mt-4">
+                  Please provide a name, description, and category scores for at least one idea to generate analysis.
+                </p>
+              )}
+
+              {/* View Analysis Button */}
+              <button
+                onClick={handleShowAnalysis}
+                className="mt-6"
+                disabled={!sufficientAnalysisData}
+              >
+                View Analysis
+              </button>
+            </>
           )}
         </>
       )}
