@@ -233,7 +233,7 @@ export default function BusinessIdeaTable() {
                             onChange={(e) =>
                               handleInputChange(index, "name", e.target.value)
                             }
-                            placeholder='Enter idea name'
+                            placeholder='Enter idea name *'
                           />
                         </td>
                         {[
@@ -275,7 +275,7 @@ export default function BusinessIdeaTable() {
                               value={idea.description}
                               onChange={(e) => handleInputChange(index, "description", e.target.value)}
                               className="w-full my-2"
-                              placeholder="Enter a description of the idea"
+                              placeholder="Enter a description of the idea *"
                               rows={3}
                             />
                           </td>
