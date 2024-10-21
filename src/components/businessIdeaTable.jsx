@@ -62,7 +62,7 @@ export default function BusinessIdeaTable() {
   };
 
   const handleRemoveIdea = (index) => {
-    if (ideas.length > 1) {
+    if (ideas.length > 2) {
       const updatedIdeas = ideas.filter((_, i) => i !== index);
       setIdeas(updatedIdeas);
       if (updatedIdeas.length === 0) {
@@ -108,7 +108,28 @@ export default function BusinessIdeaTable() {
   };
 
   const handleClearIdeas = () => {
-    setIdeas(initialIdeas);
+    setIdeas([{
+      name: "",
+      description: "",
+      effort: 1,
+      knowledge: 1,
+      interest: 1,
+      fun: 1,
+      time: 1,
+      difficulty: 1,
+      showDescription: false,
+    },
+    {
+      name: "",
+      description: "",
+      effort: 1,
+      knowledge: 1,
+      interest: 1,
+      fun: 1,
+      time: 1,
+      difficulty: 1,
+      showDescription: false,
+    }]);
     setBestIdea(null);
     setNextTopTwoIdeas([]);
   };
@@ -253,6 +274,7 @@ export default function BusinessIdeaTable() {
                             <button
                               onClick={() => handleRemoveIdea(index)}
                               className="outline"
+                              disabled={ideas.length <= 2}
                             >
                               <TrashIcon className="h-4 w-4 text-red-500" />
                             </button>
