@@ -16,12 +16,12 @@ export default function BusinessIdeaTable() {
   const [ideas, setIdeas] = useState([{
     name: "",
     description: "",
-    effort: 0,
-    knowledge: 0,
-    interest: 0,
-    fun: 0,
-    time: 0,
-    difficulty: 0,
+    effort: 1,
+    knowledge: 1,
+    interest: 1,
+    fun: 1,
+    time: 1,
+    difficulty: 1,
     showDescription: false,
   }]);
   const [customWeights, setCustomWeights] = useState({
@@ -54,12 +54,12 @@ export default function BusinessIdeaTable() {
       {
         name: "",
         description: "",
-        effort: 0,
-        knowledge: 0,
-        interest: 0,
-        fun: 0,
-        time: 0,
-        difficulty: 0,
+        effort: 1,
+        knowledge: 1,
+        interest: 1,
+        fun: 1,
+        time: 1,
+        difficulty: 1,
       },
     ]);
   };
