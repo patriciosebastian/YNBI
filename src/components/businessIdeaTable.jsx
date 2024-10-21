@@ -1,14 +1,16 @@
 'use client'
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Results from "./results"
 import Analysis from "@/app/analysis/page"
+import { scoringPresets } from "@/lib/staticData"
 
 export default function BusinessIdeaTable() {
   const [bestIdea, setBestIdea] = useState(null);
   const [nextTopTwoIdeas, setNextTopTwoIdeas] = useState([]);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [useCustomWeights, setUseCustomWeights] = useState(false);
+  const [selectedPreset, setSelectedPreset] = useState(scoringPresets.default);
   const [ideas, setIdeas] = useState([{
     name: "",
     description: "",
@@ -28,6 +30,13 @@ export default function BusinessIdeaTable() {
     time: 1,
     difficulty: 1,
   });
+
+  useEffect(() => {
+    const savedPreset = localStorage.getItem("selectedPreset");
+    if (savedPreset) {
+      setSelectedPreset(scoringPresets[savedPreset]);
+    }
+  }, []);
 
   const handleInputChange = (index, field, value) => {
     const updatedIdeas = [...ideas];
@@ -68,26 +77,27 @@ export default function BusinessIdeaTable() {
 
   const handleCalculate = () => {
     const scores = ideas.map((idea) => {
-      const weights = useCustomWeights ? customWeights : {
-        effort: 1,
-        knowledge: 1.2,
-        interest: 2,
-        fun: 1.5,
-        time: 1,
-        difficulty: 1,
-      };
+      const weights = useCustomWeights ? customWeights : scoringPresets[selectedPreset];
 
-      const positiveFactors =
+      const totalFactors =
+        idea.effort * weights.effort +
+        idea.knowledge * weights.knowledge +
         idea.interest * weights.interest +
         idea.fun * weights.fun +
-        idea.knowledge * weights.knowledge;
+        idea.time * weights.time +
+        idea.difficulty * weights.difficulty;
+
+      const positiveFactors =
+        (idea.interest * weights.interest) +
+        (idea.fun * weights.fun) +
+        (idea.knowledge * weights.knowledge);
 
       const negativeFactors =
-        idea.effort * weights.effort +
-        idea.difficulty * weights.difficulty +
-        idea.time * weights.time;
+        (idea.effort * weights.effort) +
+        (idea.difficulty * weights.difficulty) +
+        (idea.time * weights.time);
 
-      const weightedScore = positiveFactors / negativeFactors;
+      const weightedScore = (positiveFactors - negativeFactors) / totalFactors;
 
       const ratingOutOfTen = (weightedScore * 10).toFixed(1);
       return { ...idea, score: ratingOutOfTen };
@@ -108,6 +118,12 @@ export default function BusinessIdeaTable() {
 
   const handleShowAnalysis = () => {
     setShowAnalysis(true);
+  };
+
+  const handlePresetChange = (e) => {
+    const selectedPreset = e.target.value;
+    setSelectedPreset(scoringPresets[selectedPreset]);
+    localStorage.setItem("selectedPreset", selectedPreset);
   };
 
   return (
@@ -145,6 +161,14 @@ export default function BusinessIdeaTable() {
               </div>
             )}
           </div>
+
+          {/* Presets */}
+          <select name="select" aria-label="Select" onChange={handlePresetChange} className="w-fit mt-4">
+            <option value="default">Default</option>
+            <option value="timeCritical">Time-Critical</option>
+            <option value="passionDriven">Passion-Driven</option>
+            <option value="effortOptimized">Effort-Optimized</option>
+          </select>
 
           <div>
             <div>
