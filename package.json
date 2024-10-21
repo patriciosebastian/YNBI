@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.5",
     "autoprefixer": "^10.4.20",
     "html-react-parser": "^5.1.18",
     "html2pdf.js": "^0.10.2",
