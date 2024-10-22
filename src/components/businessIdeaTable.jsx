@@ -198,9 +198,9 @@ export default function BusinessIdeaTable() {
           </select>
 
           <div>
-            <div>
+            <div className="overflow-auto">
               {/* Table */}
-              <table>
+              <table className="striped">
                 <thead>
                   <tr>
                     <th>
