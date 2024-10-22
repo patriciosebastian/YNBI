@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Navbar() {
   return (
-    <nav className="w-full justify-center items-center mb-8">
+    <nav className="w-full justify-center items-center mb-8 rounded shadow-sm">
       <ul className="w-1/3">
         <li></li>
       </ul>

@@ -3,7 +3,7 @@ export default function Tips() {
     // Scoring Mechanisms
     <section id="scoring-mechanisms">
       <h2 className="text-2xl font-bold text-balance">Scoring Mechanisms</h2>
-      <article className="shadow-none">
+      <article className="shadow-none p-0">
         <p>
           There are times when you will value scoring categories differently. So, the app is designed to give you flexibility in how you score and prioritize your ideas, allowing you to use the <strong>Default Scoring</strong>, <strong>Custom Scoring</strong>, or <strong>Preset Scoring</strong>. Here&apos;s a breakdown of each:
         </p>

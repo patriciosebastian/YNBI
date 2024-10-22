@@ -150,52 +150,58 @@ export default function BusinessIdeaTable() {
         <Analysis bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} onBack={() => setShowAnalysis(false)} />
       ) : (
         <>
-          {/* Custom Wieghts */}
-          <div>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={useCustomWeights}
-                onChange={(e) => setUseCustomWeights(e.target.checked)}
-                className="mr-2"
-              />
-              Use Custom Scoring
-            </label>
-            {useCustomWeights && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                {Object.keys(customWeights).map((key) => (
-                  <div key={key}>
-                    <label>
-                      {key.charAt(0).toUpperCase() + key.slice(1)} Weight
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={customWeights[key]}
-                      onChange={(e) => setCustomWeights({ ...customWeights, [key]: Number(e.target.value) })}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <div className="lg:flex justify-between">
+            {/* Custom Wieghts */}
+            <div>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={useCustomWeights}
+                  onChange={(e) => setUseCustomWeights(e.target.checked)}
+                  className="mr-2"
+                />
+                Use Custom Scoring
+              </label>
+              {useCustomWeights && (
+                <div className="bg-[--pico-switch-background-color] grid !grid-cols-2 md:!grid-cols-3 !gap-4 p-4 mt-4 mb-2 rounded">
+                  {Object.keys(customWeights).map((key) => (
+                    <div key={key} className="w-fit">
+                      <label>
+                        {key.charAt(0).toUpperCase() + key.slice(1)} Weight
+                      </label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="10"
+                        value={customWeights[key]}
+                        onChange={(e) => setCustomWeights({ ...customWeights, [key]: Number(e.target.value) })}
+                        className="!w-20"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          {/* Presets */}
-          <label htmlFor="scoring-preset-select" className="mt-4 w-fit">Scoring Presets</label>
-          <select
-            name="scoringPreset"
-            id="scoring-preset-select"
-            aria-label="Scoring Preset Options"
-            value={selectedPreset}
-            onChange={handlePresetChange}
-            className="w-fit"
-            disabled={useCustomWeights}
-          >
-            <option value="default">Default</option>
-            <option value="timeCritical">Time-Critical</option>
-            <option value="passionDriven">Passion-Driven</option>
-            <option value="effortOptimized">Effort-Optimized</option>
-          </select>
+            {/* Presets */}
+            <div>
+              <label htmlFor="scoring-preset-select" className="w-fit mt-4 lg:mt-0">Scoring Presets</label>
+              <select
+                name="scoringPreset"
+                id="scoring-preset-select"
+                aria-label="Scoring Preset Options"
+                value={selectedPreset}
+                onChange={handlePresetChange}
+                className="w-fit"
+                disabled={useCustomWeights}
+              >
+                <option value="default">Default</option>
+                <option value="timeCritical">Time-Critical</option>
+                <option value="passionDriven">Passion-Driven</option>
+                <option value="effortOptimized">Effort-Optimized</option>
+              </select>
+            </div>
+          </div>
 
           <div>
             <div className="overflow-auto">
@@ -234,7 +240,7 @@ export default function BusinessIdeaTable() {
                         <td className='p-4 flex items-center'>
                           <button
                             onClick={() => handleToggleDescription(index)}
-                            className='mr-2 text-black bg-transparent border-none px-0 focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
+                            className='mr-2 text-[--pico-contrast] bg-transparent border-none px-0 focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
                             aria-label="Toggle Description"
                           >
                             {idea.showDescription ? <span>&#9660;</span> : <span>&#9658;</span>}
