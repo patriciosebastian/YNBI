@@ -151,7 +151,7 @@ export default function BusinessIdeaTable() {
       ) : (
         <>
           {/* Custom Wieghts */}
-          <div className="mt-4">
+          <div>
             <label className="flex items-center">
               <input
                 type="checkbox"
@@ -181,7 +181,7 @@ export default function BusinessIdeaTable() {
           </div>
 
           {/* Presets */}
-          <label htmlFor="scoring-preset-select" className="mt-4">Scoring Presets</label>
+          <label htmlFor="scoring-preset-select" className="mt-4 w-fit">Scoring Presets</label>
           <select
             name="scoringPreset"
             id="scoring-preset-select"

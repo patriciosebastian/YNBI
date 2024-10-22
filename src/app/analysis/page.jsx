@@ -50,18 +50,12 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   };
 
   return (
-    <main className="max-w-4xl mx-auto p-6">
+    <>
       <h1 className="text-4xl font-bold mb-4">Analysis</h1>
-      <button
-        onClick={onBack}
-        className="mb-4"
-      >
+      <button onClick={onBack} className="mb-4">
         Back to Calculator
       </button>
-      <button
-        onClick={exportToPDF}
-        className="ml-4 mb-4"
-      >
+      <button onClick={exportToPDF} className="ml-4 mb-4">
         Export to PDF
       </button>
 
@@ -74,6 +68,6 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
           </div>
         </div>
       )}
-    </main>
+    </>
   );
 }

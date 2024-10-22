@@ -1,4 +1,5 @@
 import  { Inter } from "next/font/google"
+import Navbar from "@/components/ui/navbar"
 import "../styles/globals.css"
 
 const inter = Inter({
@@ -22,9 +23,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className="h-full !font-sans antialiased"
+        className="h-full max-w-5xl mx-auto p-6 !font-sans antialiased"
       >
-        {children}
+        <Navbar />
+        <main>
+          {children}
+        </main>
+        {/* 2024 Your New Business Idea / Footer? */}
       </body>
     </html>
   );
