@@ -237,7 +237,7 @@ export default function BusinessIdeaTable() {
                             className='mr-2 text-black bg-transparent border-none focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
                             aria-label="Toggle Description"
                           >
-                            {idea.showDescription ? '▼' : '▶'}
+                            {idea.showDescription ? <span>&#9660;</span> : <span>&#9658;</span>}
                           </button>
                           <input
                             type='text'
@@ -304,7 +304,7 @@ export default function BusinessIdeaTable() {
               <button
                 onClick={handleAddIdea}
               >
-                Add Another Idea
+                Add Idea
               </button>
               {/* Calculate Best Idea Button */}
               <button
