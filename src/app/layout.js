@@ -1,15 +1,10 @@
-import localFont from "next/font/local"
+import  { Inter } from "next/font/google"
 import "../styles/globals.css"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const inter = Inter({
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
 export const metadata = {
@@ -19,8 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="bg-slate-850">
-      {/* Try to use Next Head later */}
+    <html lang="en" className={`bg-slate-850 ${inter.variable}`}>
       <head>
         <link
           rel="stylesheet"
@@ -28,7 +22,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`h-full ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="h-full !font-sans antialiased"
       >
         {children}
       </body>
