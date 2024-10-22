@@ -167,7 +167,7 @@ export default function BusinessIdeaTable() {
                 Use Custom Scoring
               </label>
               {useCustomWeights && (
-                <div className="bg-[--pico-switch-background-color] grid !grid-cols-2 md:!grid-cols-3 !gap-4 p-4 mt-4 mb-2 rounded">
+                <div className="bg-[--pico-modal-overlay-background-color] grid !grid-cols-2 md:!grid-cols-3 !gap-4 p-4 mt-4 mb-2 rounded">
                   {Object.keys(customWeights).map((key) => (
                     <div key={key} className="w-fit">
                       <label>
