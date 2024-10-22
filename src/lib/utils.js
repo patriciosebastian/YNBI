@@ -60,5 +60,5 @@ export const isSufficientAnalysisData = (ideas) => {
   const isNameFilled = ideas.every((idea) => idea.name.trim() !== '');
   const isDescriptionFilled = ideas.every((idea) => idea.description.trim() !== '');
 
-  return isNameFilled && isDescriptionFilled && isAllCategoriesInOneRowFilled;
+  return isNameFilled && isDescriptionFilled;
 };

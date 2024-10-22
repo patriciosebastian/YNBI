@@ -33,6 +33,11 @@ export default function BusinessIdeaTable() {
     }
   }, []);
 
+  useEffect(() => {
+    const hasSufficientData = isSufficientAnalysisData(ideas);
+    setSufficientAnalysisData(hasSufficientData);
+  }, [ideas]);
+
   const handleInputChange = (index, field, value) => {
     const updatedIdeas = [...ideas];
     updatedIdeas[index][field] = field === "name" || field === "description" ? value : Number(value);
@@ -104,7 +109,6 @@ export default function BusinessIdeaTable() {
 
     setBestIdea(topIdeas[0]);
     setNextTopTwoIdeas(topIdeas.slice(1, 3));
-    setSufficientAnalysisData(isSufficientAnalysisData(topIdeas));
   };
 
   const handleClearIdeas = () => {
@@ -316,7 +320,7 @@ export default function BusinessIdeaTable() {
               <button
                 onClick={handleCalculate}
                 className='contrast ml-4'
-                disabled={ideas.length <= 1 || !sufficientAnalysisData}
+                disabled={!sufficientAnalysisData}
               >
                 Calculate Best Idea
               </button>
