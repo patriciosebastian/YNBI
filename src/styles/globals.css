@@ -43,6 +43,10 @@ table input:not([type=checkbox],[type=radio]) {
   @apply mb-0;
 }
 
+article {
+  background: none !important;
+}
+
 .list-container li {
   @apply ml-6;
   @apply list-disc;
