@@ -234,7 +234,7 @@ export default function BusinessIdeaTable() {
                         <td className='p-4 flex items-center'>
                           <button
                             onClick={() => handleToggleDescription(index)}
-                            className='mr-2 text-black bg-transparent border-none focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
+                            className='mr-2 text-black bg-transparent border-none px-0 focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
                             aria-label="Toggle Description"
                           >
                             {idea.showDescription ? <span>&#9660;</span> : <span>&#9658;</span>}
