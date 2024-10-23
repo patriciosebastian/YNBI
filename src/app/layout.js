@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Your New Business Idea",
+  title: "Your Next Business Idea",
   description: "Evaluate and compare your business ideas to identify the best one to start next, with detailed analysis and actionable insights to guide your next steps.",
 };
 
