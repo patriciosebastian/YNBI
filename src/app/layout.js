@@ -1,5 +1,6 @@
 import  { Inter } from "next/font/google"
 import Navbar from "@/components/ui/navbar"
+import Footer from "@/components/footer"
 import "../styles/globals.css"
 
 const inter = Inter({
@@ -22,14 +23,12 @@ export default function RootLayout({ children }) {
           href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.slate.min.css"
         />
       </head>
-      <body
-        className="min-h-screen max-w-5xl mx-auto p-6 !font-sans antialiased shadow-xl"
-      >
+      <body className="min-h-svh max-w-5xl mx-auto p-6 !font-sans antialiased shadow-xl">
         <Navbar />
         <main>
           {children}
         </main>
-        {/* 2024 Your New Business Idea / Footer? */}
+        <Footer />
       </body>
     </html>
   );
