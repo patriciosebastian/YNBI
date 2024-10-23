@@ -256,6 +256,7 @@ export default function BusinessIdeaTable() {
                               handleInputChange(index, "name", e.target.value)
                             }
                             placeholder='Enter Name *'
+                            className="min-w-14"
                           />
                         </td>
                         {[
@@ -275,7 +276,7 @@ export default function BusinessIdeaTable() {
                               onChange={(e) =>
                                 handleInputChange(index, field, e.target.value)
                               }
-                              className='p-2 text-center'
+                              className='p-2 min-w-14'
                             />
                           </td>
                         ))}
