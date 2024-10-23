@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className="h-full max-w-5xl mx-auto p-6 !font-sans antialiased"
+        className="min-h-screen max-w-5xl mx-auto p-6 !font-sans antialiased shadow-xl"
       >
         <Navbar />
         <main>
