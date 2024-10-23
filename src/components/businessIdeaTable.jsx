@@ -311,24 +311,47 @@ export default function BusinessIdeaTable() {
               </table>
             </div>
             <div className='text-center mt-6 flex justify-center items-center md:block'>
-              {/* Add Idea Button */}
+              {/* Add Idea Button: Mobile */}
               <button
                 onClick={handleAddIdea}
+                className="sm:hidden"
+              >
+                Add
+              </button>
+              {/* Add Idea Button: Desktop */}
+              <button
+                onClick={handleAddIdea}
+                className="hidden sm:inline-flex"
               >
                 Add Idea
               </button>
-              {/* Calculate Best Idea Button */}
+              {/* Calculate Best Idea Button: Mobile */}
               <button
                 onClick={handleCalculate}
-                className='contrast ml-4'
+                className='contrast ml-4 sm:hidden'
+                disabled={!sufficientAnalysisData}
+              >
+                Calculate
+              </button>
+              {/* Calculate Best Idea Button: Desktop */}
+              <button
+                onClick={handleCalculate}
+                className='hidden contrast ml-4 sm:inline-flex'
                 disabled={!sufficientAnalysisData}
               >
                 Calculate Best Idea
               </button>
-              {/* Clear Ideas Button */}
+              {/* Clear Ideas Button: Mobile */}
               <button
                 onClick={handleClearIdeas}
-                className='outline ml-4'
+                className='outline ml-4 sm:hidden'
+              >
+                Clear
+              </button>
+              {/* Clear Ideas Button: Desktop */}
+              <button
+                onClick={handleClearIdeas}
+                className='hidden outline ml-4 sm:inline-flex'
               >
                 Clear Ideas
               </button>
