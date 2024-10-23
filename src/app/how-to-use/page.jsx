@@ -1,4 +1,4 @@
-export default function Tips() {
+export default function HowToUse() {
   return (
     // Scoring Mechanisms
     <section id="scoring-mechanisms">
