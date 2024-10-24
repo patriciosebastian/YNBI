@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react"
 import Skeleton from "@/components/ui/skeleton"
 import parse from "html-react-parser"
-import html2pdf from "html2pdf.js"
+import dynamic from "next/dynamic"
+
+const html2pdf = dynamic(() => import('html2pdf.js'), { ssr: false });
 
 export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
   const [loading, setLoading] = useState(false);
@@ -46,7 +48,9 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
     };
 
-    html2pdf().from(element).set(options).save();
+    if (element && typeof window !== 'undefined') {
+      html2pdf().from(element).set(options).save();
+    }
   };
 
   return (
