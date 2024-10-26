@@ -38,7 +38,7 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
     fetchAnalysis();
   }, [bestIdea, nextTopTwoIdeas]);
 
-  const exportToPDF = () => {
+  const exportToPDF = async () => {
     const element = document.querySelector('.ai-analysis-content');
     const options = {
       margin: 0.25,
@@ -48,9 +48,8 @@ export default function Analysis ({ bestIdea, nextTopTwoIdeas, onBack }) {
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
     };
 
-    if (element && typeof window !== 'undefined') {
-      html2pdf().from(element).set(options).save();
-    }
+    const html2pdf = (await import('html2pdf.js')).default;
+    html2pdf().from(element).set(options).save();
   };
 
   return (

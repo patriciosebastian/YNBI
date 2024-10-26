@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { initialIdeas, scoringPresets } from "@/lib/staticData"
-import { isSufficientAnalysisData } from "@/lib/utils"
+import { allNamesFilledOut, descriptionIsFilledOut } from "@/lib/utils"
 import { TrashIcon } from "@heroicons/react/20/solid"
 import Results from "./results"
 import Analysis from "@/app/analysis/page"
@@ -13,7 +13,7 @@ export default function BusinessIdeaTable() {
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [useCustomWeights, setUseCustomWeights] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState('default');
-  const [sufficientAnalysisData, setSufficientAnalysisData] = useState(false);
+  const [nameFields, setNameFields] = useState(false);
   const [ideas, setIdeas] = useState(initialIdeas);
   const [customWeights, setCustomWeights] = useState({
     effort: 1,
@@ -34,14 +34,21 @@ export default function BusinessIdeaTable() {
   }, []);
 
   useEffect(() => {
-    const hasSufficientData = isSufficientAnalysisData(ideas);
-    setSufficientAnalysisData(hasSufficientData);
+    const nameFieldsAreFilledOut = allNamesFilledOut(ideas);
+    setNameFields(nameFieldsAreFilledOut);
   }, [ideas]);
 
   const handleInputChange = (index, field, value) => {
     const updatedIdeas = [...ideas];
-    updatedIdeas[index][field] = field === "name" || field === "description" ? value : Number(value);
+    updatedIdeas[index][field] = field === "name" ? value : Number(value);
     setIdeas(updatedIdeas);
+  };
+
+  const handleAddDescription = (description) => {
+    setBestIdea((prevBestIdea) => ({
+      ...prevBestIdea,
+      description: description,
+    }));
   };
 
   const handleAddIdea = () => {
@@ -58,12 +65,6 @@ export default function BusinessIdeaTable() {
         difficulty: 1,
       },
     ]);
-  };
-
-  const handleToggleDescription = (index) => {
-    const updatedIdeas = [...ideas];
-    updatedIdeas[index].showDescription = !updatedIdeas[index].showDescription;
-    setIdeas(updatedIdeas);
   };
 
   const handleRemoveIdea = (index) => {
@@ -242,13 +243,6 @@ export default function BusinessIdeaTable() {
                     <React.Fragment key={index}>
                       <tr>
                         <td className='p-4 flex items-center'>
-                          <button
-                            onClick={() => handleToggleDescription(index)}
-                            className='mr-2 text-[--pico-contrast] bg-transparent border-none px-0 focus:outline-none focus:ring-0 active:ring-0 focus:border-none'
-                            aria-label="Toggle Description"
-                          >
-                            {idea.showDescription ? <span>&#9660;</span> : <span>&#9658;</span>}
-                          </button>
                           <input
                             type='text'
                             value={idea.name}
@@ -292,19 +286,6 @@ export default function BusinessIdeaTable() {
                           )}
                         </td>
                       </tr>
-                      {idea.showDescription && (
-                        <tr key={`${index}-description`}>
-                          <td colSpan={8} className="p-4">
-                            <textarea
-                              value={idea.description}
-                              onChange={(e) => handleInputChange(index, "description", e.target.value)}
-                              className="w-full my-2"
-                              placeholder="Enter a description of the idea *"
-                              rows={3}
-                            />
-                          </td>
-                        </tr>
-                      )}
                     </React.Fragment>
                   ))}
                 </tbody>
@@ -329,7 +310,7 @@ export default function BusinessIdeaTable() {
               <button
                 onClick={handleCalculate}
                 className='contrast ml-4 sm:hidden'
-                disabled={!sufficientAnalysisData}
+                disabled={!nameFields}
               >
                 Calculate
               </button>
@@ -337,7 +318,7 @@ export default function BusinessIdeaTable() {
               <button
                 onClick={handleCalculate}
                 className='hidden contrast ml-4 sm:inline-flex'
-                disabled={!sufficientAnalysisData}
+                disabled={!nameFields}
               >
                 Calculate Best Idea
               </button>
@@ -359,25 +340,16 @@ export default function BusinessIdeaTable() {
           </div>
 
           {/* Results */}
-          <Results bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} />
+          <Results bestIdea={bestIdea} nextTopTwoIdeas={nextTopTwoIdeas} onDescriptionChange={(e) => handleAddDescription(e.target.value)} />
 
           {bestIdea && nextTopTwoIdeas.length > 0 && (
-            <>
-              {!sufficientAnalysisData && (
-                <p className="text-red-500 mt-4">
-                  Please provide a name, description, and category scores for at least one idea to generate analysis.
-                </p>
-              )}
-
-              {/* View Analysis Button */}
-              <button
-                onClick={handleShowAnalysis}
-                className="mt-6"
-                disabled={!sufficientAnalysisData}
-              >
-                View Analysis
-              </button>
-            </>
+            <button
+              onClick={handleShowAnalysis}
+              className="mt-6"
+              disabled={!bestIdea.description || !descriptionIsFilledOut(bestIdea)}
+            >
+              View Analysis
+            </button>
           )}
         </>
       )}

@@ -55,10 +55,16 @@ export async function getAnalysis({ openai, bestIdea, nextTopTwoIdeas }) {
   }
 };
 
-// Check if sufficient analysis data is provided
-export const isSufficientAnalysisData = (ideas) => {
+// Check if all name fields are provided
+export const allNamesFilledOut = (ideas) => {
   const isNameFilled = ideas.every((idea) => idea.name.trim() !== '');
-  const isDescriptionFilled = ideas.every((idea) => idea.description.trim() !== '');
 
-  return isNameFilled && isDescriptionFilled;
+  return isNameFilled;
+};
+
+// Check if description field is provided
+export const descriptionIsFilledOut = (bestIdea) => {
+  const isDescriptionFilled = bestIdea.description.trim() !== '';
+
+  return isDescriptionFilled;
 };
