@@ -34,6 +34,13 @@ export default function BusinessIdeaTable() {
   }, []);
 
   useEffect(() => {
+    const savedIdeas = JSON.parse(localStorage.getItem("ideas"));
+    if (savedIdeas) {
+      setIdeas(savedIdeas);
+    }
+  }, []);
+
+  useEffect(() => {
     const nameFieldsAreFilledOut = allNamesFilledOut(ideas);
     setNameFields(nameFieldsAreFilledOut);
   }, [ideas]);
@@ -71,6 +78,7 @@ export default function BusinessIdeaTable() {
     if (ideas.length > 2) {
       const updatedIdeas = ideas.filter((_, i) => i !== index);
       setIdeas(updatedIdeas);
+      localStorage.setItem("ideas", JSON.stringify(updatedIdeas));
       if (updatedIdeas.length === 0) {
         setBestIdea(null);
       }
@@ -110,6 +118,7 @@ export default function BusinessIdeaTable() {
 
     setBestIdea(topIdeas[0]);
     setNextTopTwoIdeas(topIdeas.slice(1, 3));
+    localStorage.setItem("ideas", JSON.stringify(ideas));
   };
 
   const handleClearIdeas = () => {
@@ -137,6 +146,7 @@ export default function BusinessIdeaTable() {
     }]);
     setBestIdea(null);
     setNextTopTwoIdeas([]);
+    localStorage.removeItem("ideas");
   };
 
   const handleShowAnalysis = () => {
