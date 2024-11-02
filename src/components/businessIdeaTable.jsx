@@ -17,9 +17,9 @@ export default function BusinessIdeaTable() {
   const [ideas, setIdeas] = useState(initialIdeas);
   const [customWeights, setCustomWeights] = useState({
     effort: 1,
-    knowledge: 1.2,
-    interest: 2,
-    fun: 1.5,
+    knowledge: 3,
+    interest: 3,
+    fun: 3,
     time: 1,
     difficulty: 1,
   });

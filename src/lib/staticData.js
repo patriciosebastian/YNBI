@@ -27,12 +27,12 @@ export const initialIdeas = [
 // Scoring Mechanism Presets
 export const scoringPresets = {
   default: {
-    effort: 1,
-    knowledge: 1.2,
-    interest: 2,
-    fun: 1.5,
-    time: 1,
-    difficulty: 1,
+    effort: 0.8,
+    knowledge: 3,
+    interest: 3,
+    fun: 3,
+    time: 0.8,
+    difficulty: 0.8,
   },
   // emphasis on time
   timeCritical: {
