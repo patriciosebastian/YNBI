@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚀 Your Next Business Idea
 
-## Getting Started
+[**Your Next Business Idea**](https://yournextbusinessidea.app) is a powerful business idea evaluation tool that helps you decide which idea to pursue. By providing a custom scoring system and AI-powered insights, you can objectively compare multiple business ideas and determine the most promising one.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Table Design**  
+   Input multiple business ideas with ratings for key characteristics like:
+   - Effort
+   - Knowledge
+   - Interest
+   - Fun
+   - Time Required
+   - Difficulty
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Custom Weighted Scoring**  
+   - Adjust the importance (weight) of each characteristic to reflect your personal priorities.
+   - Scores are dynamically calculated to show the strongest idea.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **AI-Powered Analysis**  
+   - A concise AI-generated summary explains why your top idea performed best.
+   - Optional in-depth analysis provides further insights into your leading ideas.
 
-## Learn More
+- **Export Functionality**  
+   - Export your idea evaluations to Notion.  
+   - Download results and AI analyses as a PDF for offline reference.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🌟 How It Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Add Ideas**  
+   Input your business ideas into the table, along with ratings for each characteristic (scale of 1-10).
 
-## Deploy on Vercel
+2. **Adjust Weights**  
+   Assign custom weights to each characteristic to match your personal priorities.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **View Results**  
+   Instantly see which idea scores the highest based on your inputs and weighting system.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. **Get AI Insights**  
+   AI will summarize the top idea and provide an analysis of the strongest candidates.
+
+5. **Export Your Results**  
+   - Save to Notion with seamless integration.  
+   - Download a PDF to keep for future reference.
+
+
+## 🛠️ Technologies Used
+
+- **Frontend:** Next.js, TailwindCSS
+- **AI Integration:** OpenAI API
+- **Export Options:** PDF generation (html2pdf)
+- **Deployment:** Railway
